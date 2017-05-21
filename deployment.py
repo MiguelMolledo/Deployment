@@ -10,9 +10,6 @@ pip.main(['install', package_name])
 
 package_name='dropbox'
 pip.main(['install', package_name])
-# 
-
-
 
 # Set environ file 
 import os
@@ -20,8 +17,8 @@ python_dir = r"C:\Python27\Lib\site-packages"
 file = "environ.pth"
 path_to_add = [r"P:/TOOLS"]
 with open(os.path.join(python_dir,file), "w") as f:
-	for path in path_to_add:
-		f.write(path)
+    for path in path_to_add:
+        f.write(path)
 
 import time
 import os
@@ -36,7 +33,7 @@ class updater(object):
     def update(self):
         token = "5e9ZZ9cN4roAAAAAAAACUvtyEFQFQ8NF_uRG0wD6fb3geMHqC7hcp4mxKzyRktwL"
         self.dpx_d = dropbox.dropbox.Dropbox(token)
-        result =  self.dpx_d.files_list_folder("/TOOLS/Framework/", recursive=True)
+        result =  self.dpx_d.files_list_folder("/TOOLS/", recursive=True)
         for x in result.entries:
             splited = x.path_display.rsplit(".",1)
             if len(splited) >1:
@@ -49,11 +46,11 @@ class updater(object):
 
     def execute_download(self,file):
         folder = file.rsplit("/", 1)[0]
-        if not os.path.exists(folder):
-            try:
-                os.makedirs(folder)
-            except Exception as e:
-                print "Warning: %s" % e
+        try:
+            print "CREANDO FOLDER: %s"%folder
+            os.makedirs("P:/"+folder)
+        except Exception as e:
+            print "Warning: %s" % e
         try:
             print "Downloading: %s"%file
             self.dpx_d.files_download_to_file("P:/"+file,file)
